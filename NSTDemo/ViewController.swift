@@ -63,32 +63,45 @@ class ViewController: UIViewController {
         // Initialize the NST model
         let model = StarryNight()
         
-        // Next steps are pretty heavy, better process them on a background thread
+        // Next steps are pretty heavy, better process them on another thread
         DispatchQueue.global().async {
             
-            // 1 - Transform our UIImage to a PixelBuffer of appropriate size
-            guard let cvBufferInput = input.pixelBuffer(width: 720, height: 720) else {
+            // 1 - Resize our input image
+            guard let inputImage = input.resizeCG(size: CGSize(width: 720, height: 720)) else {
+                print("Resize of input image failed")
+                completion(nil)
+                return
+            }
+            
+            // 2 - Transform our UIImage to a PixelBuffer of appropriate size
+            guard let cvBufferInput = inputImage.pixelBuffer() else {
                 print("UIImage to PixelBuffer failed")
                 completion(nil)
                 return
             }
             
-            // 2 - Feed that PixelBuffer to the model
+            // 3 - Feed that PixelBuffer to the model (this is where the actual magic happens)
             guard let output = try? model.prediction(inputImage: cvBufferInput) else {
                 print("Model prediction failed")
                 completion(nil)
                 return
             }
             
-            // 3 - Transform PixelBuffer output to UIImage
+            // 4 - Transform PixelBuffer output to UIImage
             guard let outputImage = UIImage(pixelBuffer: output.outputImage) else {
                 print("PixelBuffer to UIImage failed")
                 completion(nil)
                 return
             }
             
-            // 4 - Resize result to the original size, then hand it back to the main thread
-            let finalImage = outputImage.resize(to: input.size)
+            // 5 - Resize result back to the original input size
+            guard let finalImage = outputImage.resizeCG(size: input.size) else {
+                print("Resize of output image failed")
+                completion(nil)
+                return
+            }
+            
+            // 6 - Hand result to main thread
             DispatchQueue.main.async {
                 completion(finalImage)
             }
