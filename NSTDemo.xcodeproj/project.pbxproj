@@ -7,17 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FA166BA221E3AB9900204012 /* StarryNight.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = FA166BA121E3AB9900204012 /* StarryNight.mlmodel */; };
 		FA3CB043212CA43D00B87FC4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3CB042212CA43D00B87FC4 /* AppDelegate.swift */; };
 		FA3CB045212CA43D00B87FC4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3CB044212CA43D00B87FC4 /* ViewController.swift */; };
 		FA3CB048212CA43D00B87FC4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA3CB046212CA43D00B87FC4 /* Main.storyboard */; };
 		FA3CB04A212CA43F00B87FC4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA3CB049212CA43F00B87FC4 /* Assets.xcassets */; };
 		FA3CB04D212CA43F00B87FC4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA3CB04B212CA43F00B87FC4 /* LaunchScreen.storyboard */; };
-		FA3CB055212CA67B00B87FC4 /* StarryNight.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = FA3CB054212CA67B00B87FC4 /* StarryNight.mlmodel */; };
 		FA3CB057212CA81800B87FC4 /* UIImage+CoreML.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3CB056212CA81800B87FC4 /* UIImage+CoreML.swift */; };
 		FA3CB059212CA9CF00B87FC4 /* UIImage+Resize.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3CB058212CA9CF00B87FC4 /* UIImage+Resize.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FA166BA121E3AB9900204012 /* StarryNight.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = StarryNight.mlmodel; sourceTree = "<group>"; };
 		FA3CB03F212CA43D00B87FC4 /* NSTDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NSTDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA3CB042212CA43D00B87FC4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FA3CB044212CA43D00B87FC4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -25,7 +26,6 @@
 		FA3CB049212CA43F00B87FC4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FA3CB04C212CA43F00B87FC4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FA3CB04E212CA43F00B87FC4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		FA3CB054212CA67B00B87FC4 /* StarryNight.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = StarryNight.mlmodel; sourceTree = "<group>"; };
 		FA3CB056212CA81800B87FC4 /* UIImage+CoreML.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+CoreML.swift"; sourceTree = "<group>"; };
 		FA3CB058212CA9CF00B87FC4 /* UIImage+Resize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Resize.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -69,10 +69,10 @@
 		FA3CB05A212CB05700B87FC4 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				FA166BA121E3AB9900204012 /* StarryNight.mlmodel */,
 				FA3CB04B212CA43F00B87FC4 /* LaunchScreen.storyboard */,
 				FA3CB046212CA43D00B87FC4 /* Main.storyboard */,
 				FA3CB049212CA43F00B87FC4 /* Assets.xcassets */,
-				FA3CB054212CA67B00B87FC4 /* StarryNight.mlmodel */,
 				FA3CB04E212CA43F00B87FC4 /* Info.plist */,
 			);
 			name = Resources;
@@ -161,10 +161,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA3CB045212CA43D00B87FC4 /* ViewController.swift in Sources */,
+				FA166BA221E3AB9900204012 /* StarryNight.mlmodel in Sources */,
 				FA3CB057212CA81800B87FC4 /* UIImage+CoreML.swift in Sources */,
 				FA3CB043212CA43D00B87FC4 /* AppDelegate.swift in Sources */,
 				FA3CB059212CA9CF00B87FC4 /* UIImage+Resize.swift in Sources */,
-				FA3CB055212CA67B00B87FC4 /* StarryNight.mlmodel in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -311,7 +311,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = ZAMD7Q9KYY;
 				INFOPLIST_FILE = "$(SRCROOT)/NSTDemo/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -330,7 +330,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = ZAMD7Q9KYY;
 				INFOPLIST_FILE = "$(SRCROOT)/NSTDemo/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
