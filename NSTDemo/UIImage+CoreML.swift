@@ -2,7 +2,6 @@
 //  UIImage+CoreML.swift
 //
 
-
 import UIKit
 import VideoToolbox
 

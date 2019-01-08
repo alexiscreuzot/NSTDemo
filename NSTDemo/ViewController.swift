@@ -26,7 +26,7 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    typealias FilteringCompletion = ((UIImage?) -> ())
+    typealias FilteringCompletion = ((UIImage?, Error?) -> ())
     
     @IBOutlet var imageView: UIImageView!
     @IBOutlet var loader: UIActivityIndicatorView!
@@ -65,45 +65,40 @@ class ViewController: UIViewController {
         
         // Next steps are pretty heavy, better process them on another thread
         DispatchQueue.global().async {
-            
+
             // 1 - Resize our input image
             guard let inputImage = input.resizeCG(size: CGSize(width: 720, height: 720)) else {
-                print("Resize of input image failed")
-                completion(nil)
+                completion(nil, NSTError.resizeError)
                 return
             }
-            
+
             // 2 - Transform our UIImage to a PixelBuffer of appropriate size
             guard let cvBufferInput = inputImage.pixelBuffer() else {
-                print("UIImage to PixelBuffer failed")
-                completion(nil)
+                completion(nil, NSTError.pixelBufferError)
                 return
             }
-            
+
             // 3 - Feed that PixelBuffer to the model (this is where the actual magic happens)
             guard let output = try? model.prediction(inputImage: cvBufferInput) else {
-                print("Model prediction failed")
-                completion(nil)
+                completion(nil, NSTError.predictionError)
                 return
             }
-            
+
             // 4 - Transform PixelBuffer output to UIImage
             guard let outputImage = UIImage(pixelBuffer: output.outputImage) else {
-                print("PixelBuffer to UIImage failed")
-                completion(nil)
+                completion(nil, NSTError.pixelBufferError)
                 return
             }
-            
+
             // 5 - Resize result back to the original input size
             guard let finalImage = outputImage.resizeCG(size: input.size) else {
-                print("Resize of output image failed")
-                completion(nil)
+                completion(nil, NSTError.resizeError)
                 return
             }
-            
+
             // 6 - Hand result to main thread
             DispatchQueue.main.async {
-                completion(finalImage)
+                completion(finalImage, nil)
             }
         }
     }
@@ -129,10 +124,14 @@ class ViewController: UIViewController {
         }
         
         self.isProcessing = true
-        self.process(input: image) { filteredImage in
+        self.process(input: image) { filteredImage, error in
             self.isProcessing = false
             if let filteredImage = filteredImage {
                 self.imageView.image = filteredImage
+            } else if let error = error {
+                print(error.localizedDescription)
+            } else {
+                print(NSTError.unknown.localizedDescription)
             }
         }
     }
