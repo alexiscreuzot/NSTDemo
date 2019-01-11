@@ -6,4 +6,4 @@ A minimal example of Neural Style Transfer on iOS using CoreML
 - Slides for Cocoheads paris talk (January 2019) : [CoreML : Everyone's an Artist](https://github.com/kirualex/NSTDemo/blob/master/CoreML%20_%20Everyone’s%20An%20Artist.pdf)
 
 
-![App UI](https://i.imgur.com/iPNgGyd.jpg)
+![App UI](https://cdn-images-1.medium.com/max/1600/1*uVbM1WZpjHjCHpOgQ5sF_A.jpeg)
