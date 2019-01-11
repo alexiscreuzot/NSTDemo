@@ -28,10 +28,11 @@ class ViewController: UIViewController {
     
     typealias FilteringCompletion = ((UIImage?, Error?) -> ())
     
-    @IBOutlet var imageView: UIImageView!
-    @IBOutlet var loader: UIActivityIndicatorView!
-    @IBOutlet var applyButton: UIButton!
-    @IBOutlet var loaderWidthConstraint: NSLayoutConstraint!
+    @IBOutlet private var imageView: UIImageView!
+    @IBOutlet private var loader: UIActivityIndicatorView!
+    @IBOutlet private var buttonHolderView: UIView!
+    @IBOutlet private var applyButton: UIButton!
+    @IBOutlet private var loaderWidthConstraint: NSLayoutConstraint!
     
     var imagePicker = UIImagePickerController()
     var isProcessing : Bool = false {
@@ -56,6 +57,18 @@ class ViewController: UIViewController {
         self.applyButton.superview!.layer.cornerRadius = 4
     }
     
+    //MARK: - Utils
+    func showError(_ error: Error) {
+        
+        self.buttonHolderView.backgroundColor = UIColor(red: 220/255, green: 50/255, blue: 50/255, alpha: 1)
+        self.applyButton.setTitle(error.localizedDescription, for: .normal)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { // Change `2.0` to the desired number of seconds.
+            self.applyButton.setTitle("Apply Style", for: .normal)
+            self.buttonHolderView.backgroundColor = UIColor(red: 5/255, green: 122/255, blue: 255/255, alpha: 1)
+        }
+    }
+    
     //MARK:- CoreML
     
     func process(input: UIImage, completion: @escaping FilteringCompletion) {
@@ -67,7 +80,7 @@ class ViewController: UIViewController {
         DispatchQueue.global().async {
 
             // 1 - Resize our input image
-            guard let inputImage = input.resizeCG(size: CGSize(width: 720, height: 720)) else {
+            guard let inputImage = input.resize(to: CGSize(width: 720, height: 720)) else {
                 completion(nil, NSTError.resizeError)
                 return
             }
@@ -91,7 +104,7 @@ class ViewController: UIViewController {
             }
 
             // 5 - Resize result back to the original input size
-            guard let finalImage = outputImage.resizeCG(size: input.size) else {
+            guard let finalImage = outputImage.resize(to: input.size) else {
                 completion(nil, NSTError.resizeError)
                 return
             }
@@ -129,9 +142,9 @@ class ViewController: UIViewController {
             if let filteredImage = filteredImage {
                 self.imageView.image = filteredImage
             } else if let error = error {
-                print(error.localizedDescription)
+                self.showError(error)
             } else {
-                print(NSTError.unknown.localizedDescription)
+                self.showError(NSTError.unknown)
             }
         }
     }
