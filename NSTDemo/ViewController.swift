@@ -73,6 +73,9 @@ class ViewController: UIViewController {
     
     func process(input: UIImage, completion: @escaping FilteringCompletion) {
         
+        
+        let startTime = CFAbsoluteTimeGetCurrent()
+        
         // Initialize the NST model
         let model = StarryNight()
         
@@ -111,6 +114,10 @@ class ViewController: UIViewController {
 
             // 6 - Hand result to main thread
             DispatchQueue.main.async {
+                
+                let timeElapsed = CFAbsoluteTimeGetCurrent() - startTime
+                print("Time elapsed for NST process: \(timeElapsed) s.")
+                
                 completion(finalImage, nil)
             }
         }
