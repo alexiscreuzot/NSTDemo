@@ -27,7 +27,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YX4-Cv-i6l" userLabel="buttonHolderView">
                                 <rect key="frame" x="142.5" y="516" width="90" height="42"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="3jt-HQ-rPo">
+                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="900" verticalHuggingPriority="900" horizontalCompressionResistancePriority="900" verticalCompressionResistancePriority="900" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="3jt-HQ-rPo">
                                         <rect key="frame" x="0.0" y="0.0" width="64" height="42"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <inset key="contentEdgeInsets" minX="12" minY="12" maxX="6" maxY="12"/>
@@ -118,6 +118,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="paris" width="4175" height="2783"/>
+        <image name="paris" width="540" height="522"/>
     </resources>
 </document>

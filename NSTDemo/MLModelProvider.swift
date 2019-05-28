@@ -54,15 +54,20 @@ class MLModelProviderOutput : MLFeatureProvider {
     }
 }
 
-/// Class for model loading and prediction
+/// Encapsulation class for our NST models
 @available(macOS 10.13, iOS 11.0, tvOS 11.0, watchOS 4.0, *)
 class MLModelProvider {
     var model: MLModel
     
-    var pixelBufferSize: CGSize
+    // The variable parameters for our NST models are
+    // - The input name
+    // - The output name
+    // - The pixel buffer size
+    
     var inputName: String
     var outputName: String
-    
+    var pixelBufferSize: CGSize
+   
     init(contentsOf url: URL,
          pixelBufferSize: CGSize,
          inputName: String,
@@ -73,26 +78,15 @@ class MLModelProvider {
         self.outputName = outputName
     }
     
-    convenience init(withName name: String,
-                     pixelBufferSize: CGSize,
-                     inputName: String,
-                     outputName: String) throws {
-        guard let assetPath = Bundle.main.url(forResource: name, withExtension:"mlmodelc") else {
-            throw NSTError.assetPathError
-        }
-        
-        try self.init(contentsOf: assetPath,
-                       pixelBufferSize: pixelBufferSize,
-                       inputName: inputName,
-                       outputName: outputName)
-    }
-    
     func prediction(input: MLModelProviderInput) throws -> MLModelProviderOutput {
         let outFeatures = try model.prediction(from: input)
         let result = MLModelProviderOutput(outputImage: outFeatures.featureValue(for: outputName)!.imageBufferValue!, outputName: outputName)
         return result
     }
     
+    // Provide a more abstracted prediction method
+    // Allowing for an UIImage input of any size
+    // and returning the result as an UIImage of same size
     func prediction(inputImage: UIImage) throws -> UIImage {
 
         // 1 - Resize image to our model expected size
