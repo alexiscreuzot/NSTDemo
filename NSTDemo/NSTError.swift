@@ -26,6 +26,8 @@ import Foundation
 
 public enum NSTError : Error {
     case unknown
+    case assetPathError
+    case modelError
     case resizeError
     case pixelBufferError
     case predictionError
@@ -36,6 +38,10 @@ extension NSTError: LocalizedError {
         switch self {
         case .unknown:
             return "Unknown error"
+        case .assetPathError:
+            return "Model file not found"
+        case .modelError:
+            return "Model error"
         case .resizeError:
             return "Resizing failed"
         case .pixelBufferError:

@@ -28,12 +28,16 @@ class ViewController: UIViewController {
     
     typealias FilteringCompletion = ((UIImage?, Error?) -> ())
     
+    @IBOutlet private var segmentedControl: UISegmentedControl!
     @IBOutlet private var imageView: UIImageView!
     @IBOutlet private var loader: UIActivityIndicatorView!
     @IBOutlet private var buttonHolderView: UIView!
     @IBOutlet private var applyButton: UIButton!
     @IBOutlet private var loaderWidthConstraint: NSLayoutConstraint!
     
+    
+    let models = [NSTDemoModel.starryNight, NSTDemoModel.pointillism]
+    var selectedNSTModel: NSTDemoModel = .starryNight
     var imagePicker = UIImagePickerController()
     var isProcessing : Bool = false {
         didSet {
@@ -54,6 +58,14 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.isProcessing = false
+        
+        self.segmentedControl.removeAllSegments()
+        for (index, model) in self.models.enumerated() {
+            self.segmentedControl.insertSegment(withTitle: model.rawValue, at: index, animated: false)
+        }
+        self.segmentedControl.selectedSegmentIndex = 0
+        
+        self.applyButton.titleLabel?.textAlignment = .center
         self.applyButton.superview!.layer.cornerRadius = 4
     }
     
@@ -73,57 +85,44 @@ class ViewController: UIViewController {
     
     func process(input: UIImage, completion: @escaping FilteringCompletion) {
         
-        
         let startTime = CFAbsoluteTimeGetCurrent()
+        var finalImage: UIImage?
+        var nstError: Error?
         
-        // Initialize the NST model
-        let model = StarryNight()
-        
-        // Next steps are pretty heavy, better process them on another thread
+        // Next step is pretty heavy, better process it
+        // asynchronously to prevent UI freeze
         DispatchQueue.global().async {
-
-            // 1 - Resize our input image
-            guard let inputImage = input.resize(to: CGSize(width: 720, height: 720)) else {
-                completion(nil, NSTError.resizeError)
-                return
+            
+            // Load model and launch prediction
+            do {
+                let modelProvider = try self.selectedNSTModel.modelProvider()
+                finalImage = try modelProvider.prediction(inputImage: input)
+            } catch let error {
+                nstError = error
             }
-
-            // 2 - Transform our UIImage to a PixelBuffer of appropriate size
-            guard let cvBufferInput = inputImage.pixelBuffer() else {
-                completion(nil, NSTError.pixelBufferError)
-                return
-            }
-
-            // 3 - Feed that PixelBuffer to the model (this is where the actual magic happens)
-            guard let output = try? model.prediction(inputImage: cvBufferInput) else {
-                completion(nil, NSTError.predictionError)
-                return
-            }
-
-            // 4 - Transform PixelBuffer output to UIImage
-            guard let outputImage = UIImage(pixelBuffer: output.outputImage) else {
-                completion(nil, NSTError.pixelBufferError)
-                return
-            }
-
-            // 5 - Resize result back to the original input size
-            guard let finalImage = outputImage.resize(to: input.size) else {
-                completion(nil, NSTError.resizeError)
-                return
-            }
-
-            // 6 - Hand result to main thread
+            
+            // Hand result to main thread
             DispatchQueue.main.async {
+                if let finalImage = finalImage {
+                    completion(finalImage, nil)
+                } else if let nstError = nstError{
+                    completion(nil, nstError)
+                } else {
+                    completion(nil, NSTError.unknown)
+                }
                 
                 let timeElapsed = CFAbsoluteTimeGetCurrent() - startTime
                 print("Time elapsed for NST process: \(timeElapsed) s.")
-                
-                completion(finalImage, nil)
             }
         }
     }
     
     //MARK:- Actions
+    
+    @IBAction func segmentedControlValueChanged() {
+        self.selectedNSTModel = self.models[self.segmentedControl.selectedSegmentIndex]
+        self.imageView.image = UIImage(named: "paris")
+    }
     
     @IBAction func importFromLibrary() {
         if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
@@ -165,8 +164,8 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
         self.dismiss(animated: true)
     }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             self.imageView.image = pickedImage
             self.imageView.backgroundColor = .clear
         }

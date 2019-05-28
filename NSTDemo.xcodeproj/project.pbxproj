@@ -15,6 +15,9 @@
 		FA3CB057212CA81800B87FC4 /* UIImage+CoreML.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3CB056212CA81800B87FC4 /* UIImage+CoreML.swift */; };
 		FA3CB059212CA9CF00B87FC4 /* UIImage+Resize.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3CB058212CA9CF00B87FC4 /* UIImage+Resize.swift */; };
 		FA935D5921E3B26200F7369A /* NSTError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA935D5821E3B26200F7369A /* NSTError.swift */; };
+		FAE29AD1229BE575000BAB1D /* MLModelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE29AD0229BE575000BAB1D /* MLModelProvider.swift */; };
+		FAE29AE5229D21A5000BAB1D /* NSTModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE29AE4229D21A5000BAB1D /* NSTModel.swift */; };
+		FAE29AEB229D3811000BAB1D /* Pointillism.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = FAE29AEA229D3811000BAB1D /* Pointillism.mlmodel */; };
 		FAF9BE3421E49D7000B85015 /* StarryNight.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = FAF9BE3321E49D7000B85015 /* StarryNight.mlmodel */; };
 /* End PBXBuildFile section */
 
@@ -29,6 +32,9 @@
 		FA3CB056212CA81800B87FC4 /* UIImage+CoreML.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+CoreML.swift"; sourceTree = "<group>"; };
 		FA3CB058212CA9CF00B87FC4 /* UIImage+Resize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Resize.swift"; sourceTree = "<group>"; };
 		FA935D5821E3B26200F7369A /* NSTError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSTError.swift; sourceTree = "<group>"; };
+		FAE29AD0229BE575000BAB1D /* MLModelProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MLModelProvider.swift; sourceTree = "<group>"; };
+		FAE29AE4229D21A5000BAB1D /* NSTModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSTModel.swift; sourceTree = "<group>"; };
+		FAE29AEA229D3811000BAB1D /* Pointillism.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = Pointillism.mlmodel; sourceTree = "<group>"; };
 		FAF9BE3321E49D7000B85015 /* StarryNight.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = StarryNight.mlmodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -71,6 +77,7 @@
 		FA3CB05A212CB05700B87FC4 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				FAE29AEA229D3811000BAB1D /* Pointillism.mlmodel */,
 				FAF9BE3321E49D7000B85015 /* StarryNight.mlmodel */,
 				FA3CB04B212CA43F00B87FC4 /* LaunchScreen.storyboard */,
 				FA3CB046212CA43D00B87FC4 /* Main.storyboard */,
@@ -85,6 +92,8 @@
 			children = (
 				FA3CB042212CA43D00B87FC4 /* AppDelegate.swift */,
 				FA3CB044212CA43D00B87FC4 /* ViewController.swift */,
+				FAE29AD0229BE575000BAB1D /* MLModelProvider.swift */,
+				FAE29AE4229D21A5000BAB1D /* NSTModel.swift */,
 				FA935D5821E3B26200F7369A /* NSTError.swift */,
 				FA3CB058212CA9CF00B87FC4 /* UIImage+Resize.swift */,
 				FA3CB056212CA81800B87FC4 /* UIImage+CoreML.swift */,
@@ -124,6 +133,7 @@
 				TargetAttributes = {
 					FA3CB03E212CA43D00B87FC4 = {
 						CreatedOnToolsVersion = 9.4.1;
+						LastSwiftMigration = 1020;
 					};
 				};
 			};
@@ -164,10 +174,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA935D5921E3B26200F7369A /* NSTError.swift in Sources */,
+				FAE29AD1229BE575000BAB1D /* MLModelProvider.swift in Sources */,
+				FAE29AE5229D21A5000BAB1D /* NSTModel.swift in Sources */,
 				FA3CB045212CA43D00B87FC4 /* ViewController.swift in Sources */,
 				FAF9BE3421E49D7000B85015 /* StarryNight.mlmodel in Sources */,
 				FA3CB057212CA81800B87FC4 /* UIImage+CoreML.swift in Sources */,
 				FA3CB043212CA43D00B87FC4 /* AppDelegate.swift in Sources */,
+				FAE29AEB229D3811000BAB1D /* Pointillism.mlmodel in Sources */,
 				FA3CB059212CA9CF00B87FC4 /* UIImage+Resize.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -322,7 +335,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = fr.monoqle.NSTDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -341,7 +354,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = fr.monoqle.NSTDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
