@@ -39,6 +39,8 @@ class ViewController: UIViewController {
     let models = [NSTDemoModel.starryNight, NSTDemoModel.pointillism]
     var selectedNSTModel: NSTDemoModel = .starryNight
     var imagePicker = UIImagePickerController()
+    var selectedImage = UIImage(named: "paris")
+    
     var isProcessing : Bool = false {
         didSet {
             self.applyButton.isEnabled = !isProcessing
@@ -121,7 +123,7 @@ class ViewController: UIViewController {
     
     @IBAction func segmentedControlValueChanged() {
         self.selectedNSTModel = self.models[self.segmentedControl.selectedSegmentIndex]
-        self.imageView.image = UIImage(named: "paris")
+        self.imageView.image = self.selectedImage
     }
     
     @IBAction func importFromLibrary() {
@@ -166,6 +168,7 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            self.selectedImage = pickedImage
             self.imageView.image = pickedImage
             self.imageView.backgroundColor = .clear
         }
