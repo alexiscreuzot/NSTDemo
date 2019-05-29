@@ -55,7 +55,8 @@ class MLModelProvider {
         }
         
         // 3 -  Feed that PixelBuffer to the model (this is where the actual magic happens)
-        let MLInput = MLModelProviderInput(inputImage: cvBufferInput, inputName: inputName)
+        let MLInput = MLModelProviderInput(inputImage: cvBufferInput,
+                                           inputName: inputName)
         let output = try self.prediction(input: MLInput)
         
         // 4 - Transform PixelBuffer output to UIImage

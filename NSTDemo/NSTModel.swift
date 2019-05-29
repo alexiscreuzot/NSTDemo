@@ -10,8 +10,9 @@ import Foundation
 import CoreGraphics
 
 enum NSTDemoModel : String, CaseIterable {
-    case pointillism = "Pointillism"
+    
     case starryNight = "StarryNight"
+    case pointillism = "Pointillism"
     
     func modelProvider() throws -> MLModelProvider {
         guard let url = Bundle.main.url(forResource: self.rawValue, withExtension:"mlmodelc") else {
@@ -19,16 +20,16 @@ enum NSTDemoModel : String, CaseIterable {
         }
         
         switch self {
-        case .pointillism:
-            return try MLModelProvider(contentsOf: url,
-                                       pixelBufferSize: CGSize(width:720, height:720),
-                                       inputName: "myInput",
-                                       outputName: "myOutput")
         case .starryNight:
             return try MLModelProvider(contentsOf: url,
                                        pixelBufferSize: CGSize(width:720, height:720),
                                        inputName: "inputImage",
                                        outputName: "outputImage")
+        case .pointillism:
+            return try MLModelProvider(contentsOf: url,
+                                       pixelBufferSize: CGSize(width:720, height:720),
+                                       inputName: "myInput",
+                                       outputName: "myOutput")
         }
     }
 }
