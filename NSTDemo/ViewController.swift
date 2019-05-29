@@ -36,7 +36,6 @@ class ViewController: UIViewController {
     @IBOutlet private var loaderWidthConstraint: NSLayoutConstraint!
     
     
-    let models = [NSTDemoModel.starryNight, NSTDemoModel.pointillism]
     var selectedNSTModel: NSTDemoModel = .starryNight
     var imagePicker = UIImagePickerController()
     var selectedImage = UIImage(named: "paris")
@@ -62,7 +61,7 @@ class ViewController: UIViewController {
         self.isProcessing = false
         
         self.segmentedControl.removeAllSegments()
-        for (index, model) in self.models.enumerated() {
+        for (index, model) in NSTDemoModel.allCases.enumerated() {
             self.segmentedControl.insertSegment(withTitle: model.rawValue, at: index, animated: false)
         }
         self.segmentedControl.selectedSegmentIndex = 0
@@ -122,7 +121,7 @@ class ViewController: UIViewController {
     //MARK:- Actions
     
     @IBAction func segmentedControlValueChanged() {
-        self.selectedNSTModel = self.models[self.segmentedControl.selectedSegmentIndex]
+        self.selectedNSTModel = NSTDemoModel.allCases[self.segmentedControl.selectedSegmentIndex]
         self.imageView.image = self.selectedImage
     }
     

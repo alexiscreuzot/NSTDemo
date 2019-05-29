@@ -9,6 +9,69 @@
 import UIKit
 import CoreML
 
+/// Encapsulation class for our NST models
+@available(macOS 10.13, iOS 11.0, tvOS 11.0, watchOS 4.0, *)
+class MLModelProvider {
+    var model: MLModel
+    
+    // The variable parameters for our NST models are
+    // - The input name
+    // - The output name
+    // - The pixel buffer size
+    var inputName: String
+    var outputName: String
+    var pixelBufferSize: CGSize
+   
+    init(contentsOf url: URL,
+         pixelBufferSize: CGSize,
+         inputName: String,
+         outputName: String) throws {
+        self.model = try MLModel(contentsOf: url)
+        self.pixelBufferSize = pixelBufferSize
+        self.inputName = inputName
+        self.outputName = outputName
+    }
+    
+    // Prediction using our custom MLModelProviderInput and MLModelProviderOutput
+    func prediction(input: MLModelProviderInput) throws -> MLModelProviderOutput {
+        let outFeatures = try model.prediction(from: input)
+        let result = MLModelProviderOutput(outputImage: outFeatures.featureValue(for: outputName)!.imageBufferValue!, outputName: outputName)
+        return result
+    }
+    
+    // Provide a more abstracted prediction method
+    // Allowing for an UIImage input of any size
+    // and returning the result as an UIImage of same size
+    func prediction(inputImage: UIImage) throws -> UIImage {
+
+        // 1 - Resize image to our model expected size
+        guard let resizedImage = inputImage.resize(to: self.pixelBufferSize) else {
+            throw NSTError.resizeError
+        }
+        
+        // 2 - Transform our UIImage to a PixelBuffer
+        guard let cvBufferInput = resizedImage.pixelBuffer() else {
+            throw NSTError.pixelBufferError
+        }
+        
+        // 3 -  Feed that PixelBuffer to the model (this is where the actual magic happens)
+        let MLInput = MLModelProviderInput(inputImage: cvBufferInput, inputName: inputName)
+        let output = try self.prediction(input: MLInput)
+        
+        // 4 - Transform PixelBuffer output to UIImage
+        guard let outputImage = UIImage(pixelBuffer: output.outputImage) else {
+            throw NSTError.pixelBufferError
+        }
+        
+        // 5 - Resize result back to the original input size
+        guard let finalImage = outputImage.resize(to: inputImage.size) else {
+            throw NSTError.resizeError
+        }
+
+        return finalImage
+    }
+}
+
 /// Model Prediction Input Type
 @available(macOS 10.13, iOS 11.0, tvOS 11.0, watchOS 4.0, *)
 class MLModelProviderInput : MLFeatureProvider {
@@ -53,68 +116,3 @@ class MLModelProviderOutput : MLFeatureProvider {
         self.outputImage = outputImage
     }
 }
-
-/// Encapsulation class for our NST models
-@available(macOS 10.13, iOS 11.0, tvOS 11.0, watchOS 4.0, *)
-class MLModelProvider {
-    var model: MLModel
-    
-    // The variable parameters for our NST models are
-    // - The input name
-    // - The output name
-    // - The pixel buffer size
-    
-    var inputName: String
-    var outputName: String
-    var pixelBufferSize: CGSize
-   
-    init(contentsOf url: URL,
-         pixelBufferSize: CGSize,
-         inputName: String,
-         outputName: String) throws {
-        self.model = try MLModel(contentsOf: url)
-        self.pixelBufferSize = pixelBufferSize
-        self.inputName = inputName
-        self.outputName = outputName
-    }
-    
-    func prediction(input: MLModelProviderInput) throws -> MLModelProviderOutput {
-        let outFeatures = try model.prediction(from: input)
-        let result = MLModelProviderOutput(outputImage: outFeatures.featureValue(for: outputName)!.imageBufferValue!, outputName: outputName)
-        return result
-    }
-    
-    // Provide a more abstracted prediction method
-    // Allowing for an UIImage input of any size
-    // and returning the result as an UIImage of same size
-    func prediction(inputImage: UIImage) throws -> UIImage {
-
-        // 1 - Resize image to our model expected size
-        guard let resizedImage = inputImage.resize(to: self.pixelBufferSize) else {
-            throw NSTError.resizeError
-        }
-        
-        // 2 - Transform our UIImage to a PixelBuffer
-        guard let cvBufferInput = resizedImage.pixelBuffer() else {
-            throw NSTError.pixelBufferError
-        }
-        
-        // 3 -  Feed that PixelBuffer to the model (this is where the actual magic happens)
-        let MLInput = MLModelProviderInput(inputImage: cvBufferInput, inputName: inputName)
-        let output = try self.prediction(input: MLInput)
-        
-        // 4 - Transform PixelBuffer output to UIImage
-        guard let outputImage = UIImage(pixelBuffer: output.outputImage) else {
-            throw NSTError.pixelBufferError
-        }
-        
-        // 5 - Resize result back to the original input size
-        guard let finalImage = outputImage.resize(to: inputImage.size) else {
-            throw NSTError.resizeError
-        }
-
-        return finalImage
-    }
-}
-
-

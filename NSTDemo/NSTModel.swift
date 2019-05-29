@@ -9,7 +9,7 @@
 import Foundation
 import CoreGraphics
 
-enum NSTDemoModel : String {
+enum NSTDemoModel : String, CaseIterable {
     case pointillism = "Pointillism"
     case starryNight = "StarryNight"
     
