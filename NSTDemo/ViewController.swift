@@ -87,7 +87,7 @@ class ViewController: UIViewController {
     func process(input: UIImage, completion: @escaping FilteringCompletion) {
         
         let startTime = CFAbsoluteTimeGetCurrent()
-        var finalImage: UIImage?
+        var outputImage: UIImage?
         var nstError: Error?
         
         // Next step is pretty heavy, better process it
@@ -97,15 +97,15 @@ class ViewController: UIViewController {
             // Load model and launch prediction
             do {
                 let modelProvider = try self.selectedNSTModel.modelProvider()
-                finalImage = try modelProvider.prediction(inputImage: input)
+                outputImage = try modelProvider.prediction(inputImage: input)
             } catch let error {
                 nstError = error
             }
             
             // Hand result to main thread
             DispatchQueue.main.async {
-                if let finalImage = finalImage {
-                    completion(finalImage, nil)
+                if let outputImage = outputImage {
+                    completion(outputImage, nil)
                 } else if let nstError = nstError{
                     completion(nil, nstError)
                 } else {
