@@ -9,15 +9,31 @@
 import UIKit
 import CoreML
 
+enum NSTDemoModel : String, CaseIterable {
+    
+    case starryNight = "StarryNight"
+    
+    func modelProvider() throws -> MLModelProvider {
+        guard let url = Bundle.main.url(forResource: self.rawValue, withExtension:"mlmodelc") else {
+            throw NSTError.assetPathError
+        }
+        
+        switch self {
+        case .starryNight:
+            return try MLModelProvider(contentsOf: url,
+                                       pixelBufferSize: CGSize(width:720, height:720),
+                                       inputName: "inputImage",
+                                       outputName: "outputImage")
+        }
+    }
+}
+
 /// Encapsulation class for our NST models
 @available(macOS 10.13, iOS 11.0, tvOS 11.0, watchOS 4.0, *)
 class MLModelProvider {
     var model: MLModel
     
-    // The variable parameters for our NST models are
-    // - The input name
-    // - The output name
-    // - The pixel buffer size
+    // The variable parameters for our NST models
     var inputName: String
     var outputName: String
     var pixelBufferSize: CGSize
@@ -30,13 +46,6 @@ class MLModelProvider {
         self.pixelBufferSize = pixelBufferSize
         self.inputName = inputName
         self.outputName = outputName
-    }
-    
-    // Prediction using our custom MLModelProviderInput and MLModelProviderOutput
-    func prediction(input: MLModelProviderInput) throws -> MLModelProviderOutput {
-        let outFeatures = try model.prediction(from: input)
-        let result = MLModelProviderOutput(outputImage: outFeatures.featureValue(for: outputName)!.imageBufferValue!, outputName: outputName)
-        return result
     }
     
     // Provide a more abstracted prediction method
@@ -56,6 +65,13 @@ class MLModelProvider {
 
         // 5 - Resize result back to the original input size
 
+    }
+    
+    // Prediction using our custom MLModelProviderInput and MLModelProviderOutput
+    func prediction(input: MLModelProviderInput) throws -> MLModelProviderOutput {
+        let outFeatures = try model.prediction(from: input)
+        let result = MLModelProviderOutput(outputImage: outFeatures.featureValue(for: outputName)!.imageBufferValue!, outputName: outputName)
+        return result
     }
 }
 
