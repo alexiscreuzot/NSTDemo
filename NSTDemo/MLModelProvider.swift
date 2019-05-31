@@ -14,6 +14,7 @@ enum NSTDemoModel : String, CaseIterable {
     case starryNight = "StarryNight"
     
     func modelProvider() throws -> MLModelProvider {
+        
         guard let url = Bundle.main.url(forResource: self.rawValue, withExtension:"mlmodelc") else {
             throw NSTError.assetPathError
         }
@@ -21,9 +22,9 @@ enum NSTDemoModel : String, CaseIterable {
         switch self {
         case .starryNight:
             return try MLModelProvider(contentsOf: url,
-                                       pixelBufferSize: CGSize(width:720, height:720),
-                                       inputName: "inputImage",
-                                       outputName: "outputImage")
+                                       pixelBufferSize: CGSize.zero,
+                                       inputName: "unknown",
+                                       outputName: "unknown")
         }
     }
 }
@@ -37,7 +38,7 @@ class MLModelProvider {
     var inputName: String
     var outputName: String
     var pixelBufferSize: CGSize
-   
+    
     init(contentsOf url: URL,
          pixelBufferSize: CGSize,
          inputName: String,
@@ -49,22 +50,24 @@ class MLModelProvider {
     }
     
     // Provide a more abstracted prediction method
-    // Allowing for an UIImage input of any size
-    // and returning the result as an UIImage of same size
+    // that can handle an UIImage input of any size
+    // and returning the result as an UIImage of that same size
     func prediction(inputImage: UIImage) throws -> UIImage {
         
         throw NSTError.needImplementation
-
+        
+        // TODO
+        
         // 1 - Resize image to our model expected size
-
+        
         // 2 - Transform our UIImage to a PixelBuffer
-
+        
         // 3 - Use MLModelProviderInput to feed PixelBuffer to the model
-
+        
         // 4 - Transform PixelBuffer output to UIImage
-
+        
         // 5 - Resize result back to the original input size
-
+        
     }
     
     // Prediction using our custom MLModelProviderInput and MLModelProviderOutput
