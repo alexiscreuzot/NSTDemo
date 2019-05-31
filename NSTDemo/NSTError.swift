@@ -44,7 +44,7 @@ extension NSTError: LocalizedError {
         case .assetPathError:
             return "Model file not found"
         case .modelError:
-            return "Model error"
+            return "Invalid model parameters"
         case .resizeError:
             return "Resizing failed"
         case .pixelBufferError:

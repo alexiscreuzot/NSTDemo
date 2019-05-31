@@ -21,10 +21,7 @@ enum NSTDemoModel : String, CaseIterable {
         
         switch self {
         case .starryNight:
-            return try MLModelProvider(contentsOf: url,
-                                       pixelBufferSize: CGSize.zero,
-                                       inputName: "unknown",
-                                       outputName: "unknown")
+            throw NSTError.modelError // TODO
         }
     }
 }
