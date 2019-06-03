@@ -15,7 +15,7 @@ enum NSTDemoModel : String, CaseIterable {
     
     func modelProvider() throws -> MLModelProvider {
         
-        guard let url = Bundle.main.url(forResource: self.rawValue, withExtension:"mlmodelc") else {
+        guard let _ = Bundle.main.url(forResource: self.rawValue, withExtension:"mlmodelc") else {
             throw NSTError.assetPathError
         }
         
@@ -51,9 +51,8 @@ class MLModelProvider {
     // and returning the result as an UIImage of that same size
     func prediction(inputImage: UIImage) throws -> UIImage {
         
-        throw NSTError.needImplementation
-        
         // TODO
+        throw NSTError.needImplementation
         
         // 1 - Resize image to our model expected size
         

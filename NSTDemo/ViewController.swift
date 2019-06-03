@@ -89,8 +89,7 @@ class ViewController: UIViewController {
         var outputImage: UIImage?
         var nstError: Error?
         
-        // Next step is pretty heavy, better process it
-        // asynchronously to prevent UI freeze
+        // Next step is pretty heavy, better process it asynchronously to prevent UI freeze
         DispatchQueue.global().async {
             // Load model and launch prediction
             do {

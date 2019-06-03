@@ -40,7 +40,7 @@ extension NSTError: LocalizedError {
         case .unknown:
             return "Unknown error"
         case .needImplementation:
-            return "Need implementation"
+            return "Need prediction implementation"
         case .assetPathError:
             return "Model file not found"
         case .modelError:
