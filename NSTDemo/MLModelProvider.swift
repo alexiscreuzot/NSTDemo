@@ -12,6 +12,7 @@ import CoreML
 enum NSTDemoModel : String, CaseIterable {
     
     case starryNight = "StarryNight"
+    case pointillism = "Pointillism"
     
     func modelProvider() throws -> MLModelProvider {
         
@@ -21,7 +22,9 @@ enum NSTDemoModel : String, CaseIterable {
         
         switch self {
         case .starryNight:
-            throw NSTError.modelError // TODO
+            return try MLModelProvider.init(contentsOf: url, pixelBufferSize: CGSize.init(width: 720, height: 720), inputName: "inputImage", outputName: "outputImage")
+        case .pointillism:
+            return try MLModelProvider.init(contentsOf: url, pixelBufferSize: CGSize.init(width: 720, height: 720), inputName: "myInput", outputName: "myOutput")
         }
     }
 }
@@ -51,20 +54,32 @@ class MLModelProvider {
     // and returning the result as an UIImage of that same size
     func prediction(inputImage: UIImage) throws -> UIImage {
         
-        throw NSTError.needImplementation
-        
-        // TODO
         
         // 1 - Resize image to our model expected size
+        guard let resizedImage = inputImage.resize(to: self.pixelBufferSize) else {
+            throw NSTError.resizeError
+        }
         
         // 2 - Transform our UIImage to a PixelBuffer
+        guard let inputPixelBuffer = resizedImage.pixelBuffer() else {
+            throw NSTError.pixelBufferError
+        }
         
         // 3 - Use MLModelProviderInput to feed PixelBuffer to the model
+        let inputProvider = MLModelProviderInput.init(inputImage: inputPixelBuffer, inputName: self.inputName)
+        let outputProvider = try self.prediction(input: inputProvider)
         
         // 4 - Transform PixelBuffer output to UIImage
+        guard let outputImage = UIImage.init(pixelBuffer: outputProvider.outputImage) else {
+            throw NSTError.pixelBufferError
+        }
         
         // 5 - Resize result back to the original input size
+        guard let finalImage = outputImage.resize(to: inputImage.size) else {
+            throw NSTError.resizeError
+        }
         
+        return finalImage
     }
     
     // Prediction using our custom MLModelProviderInput and MLModelProviderOutput
