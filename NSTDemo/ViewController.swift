@@ -86,14 +86,12 @@ class ViewController: UIViewController {
     
     func process(input: UIImage, completion: @escaping FilteringCompletion) {
         
-        let startTime = CFAbsoluteTimeGetCurrent()
         var outputImage: UIImage?
         var nstError: Error?
         
         // Next step is pretty heavy, better process it
         // asynchronously to prevent UI freeze
         DispatchQueue.global().async {
-            
             // Load model and launch prediction
             do {
                 let modelProvider = try self.selectedNSTModel.modelProvider()
@@ -101,19 +99,13 @@ class ViewController: UIViewController {
             } catch let error {
                 nstError = error
             }
-            
             // Hand result to main thread
             DispatchQueue.main.async {
                 if let outputImage = outputImage {
                     completion(outputImage, nil)
-                } else if let nstError = nstError{
-                    completion(nil, nstError)
                 } else {
-                    completion(nil, NSTError.unknown)
+                    completion(nil, nstError)
                 }
-                
-                let timeElapsed = CFAbsoluteTimeGetCurrent() - startTime
-                print("Time elapsed for NST process: \(timeElapsed) s.")
             }
         }
     }
