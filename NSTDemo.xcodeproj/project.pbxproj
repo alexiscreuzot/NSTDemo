@@ -16,7 +16,6 @@
 		FA3CB059212CA9CF00B87FC4 /* UIImage+Resize.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3CB058212CA9CF00B87FC4 /* UIImage+Resize.swift */; };
 		FA935D5921E3B26200F7369A /* NSTError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA935D5821E3B26200F7369A /* NSTError.swift */; };
 		FAE29AD1229BE575000BAB1D /* MLModelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE29AD0229BE575000BAB1D /* MLModelProvider.swift */; };
-		FAE29AE5229D21A5000BAB1D /* NSTModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE29AE4229D21A5000BAB1D /* NSTModel.swift */; };
 		FAE29AEF229D5DF0000BAB1D /* Pointillism.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = FAE29AEE229D5DF0000BAB1D /* Pointillism.mlmodel */; };
 		FAF9BE3421E49D7000B85015 /* StarryNight.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = FAF9BE3321E49D7000B85015 /* StarryNight.mlmodel */; };
 /* End PBXBuildFile section */
@@ -33,7 +32,6 @@
 		FA3CB058212CA9CF00B87FC4 /* UIImage+Resize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Resize.swift"; sourceTree = "<group>"; };
 		FA935D5821E3B26200F7369A /* NSTError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSTError.swift; sourceTree = "<group>"; };
 		FAE29AD0229BE575000BAB1D /* MLModelProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MLModelProvider.swift; sourceTree = "<group>"; };
-		FAE29AE4229D21A5000BAB1D /* NSTModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSTModel.swift; sourceTree = "<group>"; };
 		FAE29AEE229D5DF0000BAB1D /* Pointillism.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = Pointillism.mlmodel; sourceTree = "<group>"; };
 		FAF9BE3321E49D7000B85015 /* StarryNight.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = StarryNight.mlmodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -93,7 +91,6 @@
 				FA3CB042212CA43D00B87FC4 /* AppDelegate.swift */,
 				FA3CB044212CA43D00B87FC4 /* ViewController.swift */,
 				FAE29AD0229BE575000BAB1D /* MLModelProvider.swift */,
-				FAE29AE4229D21A5000BAB1D /* NSTModel.swift */,
 				FA935D5821E3B26200F7369A /* NSTError.swift */,
 				FA3CB058212CA9CF00B87FC4 /* UIImage+Resize.swift */,
 				FA3CB056212CA81800B87FC4 /* UIImage+CoreML.swift */,
@@ -175,7 +172,6 @@
 			files = (
 				FA935D5921E3B26200F7369A /* NSTError.swift in Sources */,
 				FAE29AD1229BE575000BAB1D /* MLModelProvider.swift in Sources */,
-				FAE29AE5229D21A5000BAB1D /* NSTModel.swift in Sources */,
 				FA3CB045212CA43D00B87FC4 /* ViewController.swift in Sources */,
 				FAF9BE3421E49D7000B85015 /* StarryNight.mlmodel in Sources */,
 				FA3CB057212CA81800B87FC4 /* UIImage+CoreML.swift in Sources */,
